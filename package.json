@@ -1,0 +1,21 @@
+{
+  "name": "MyContacts",
+  "version": "1.0.0",
+  "description": "API to store contacts",
+  "main": "src/index.js",
+  "repository": "https://github.com/paulofelipebrito/MyContacts.git",
+  "author": "Paulo Felipe Brito <paulofelipebrito@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "nodemon": "^2.0.15"
+  }
+}
