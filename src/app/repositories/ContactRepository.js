@@ -2,25 +2,22 @@ const db = require('../../database');
 
 class ContactsRepository {
   async findAll(orderBy = 'ASC') {
-    // eslint-disable-next-line no-promise-executor-return
     const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
     const rows = await db.query(`SELECT * FROM contacts ORDER BY name ${direction}`);
     return rows;
   }
 
   async findById(id) {
-    // eslint-disable-next-line no-promise-executor-return
     const row = await db.query('SELECT * FROM contacts WHERE id = $1', [id]);
     return row;
   }
 
   async findByEmail(email) {
-    // eslint-disable-next-line no-promise-executor-return
     const row = await db.query('SELECT * FROM contacts WHERE email = $1', [email]);
     return row;
   }
 
-  async delete(id) {
+  delete(id) {
     const deleteOp = db.query(`
     DELETE FROM contacts
     WHERE id = $1`, [id]);

@@ -27,7 +27,6 @@ class ContactController {
   async store(request, response) {
     // Create data
     const {
-      // eslint-disable-next-line camelcase
       name, email, phone, category_id,
     } = request.body;
 
@@ -35,14 +34,13 @@ class ContactController {
       return response.status(400).json({ error: 'Name is required' });
     }
 
-    const contactExists = await ContactRepository.findByEmail(email);
+    const [contactExists] = await ContactRepository.findByEmail(email);
 
     if (contactExists) {
       return response.status(400).json({ error: 'This e-mail is alreeady in use' });
     }
 
     const contact = await ContactRepository.create({
-      // eslint-disable-next-line camelcase
       name, email, phone, category_id,
     });
 
@@ -65,14 +63,15 @@ class ContactController {
     if (!name) {
       return response.status(400).json({ error: 'Name is required' });
     }
-    const contactByEmail = await ContactRepository.findByEmail(email);
-
+    const [contactByEmail] = await ContactRepository.findByEmail(email);
+    console.log(contactByEmail);
+    console.log(email);
     if (contactByEmail && contactByEmail.id !== id) {
+      console.log(email);
       return response.status(400).json({ error: 'This e-mail is alreeady in use' });
     }
 
     const contact = await ContactRepository.update(id, {
-      // eslint-disable-next-line camelcase
       name, email, phone, category_id,
     });
 
