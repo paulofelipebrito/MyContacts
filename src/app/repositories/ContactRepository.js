@@ -1,87 +1,55 @@
-const { uuid } = require('uuidv4');
-
-let contacts = [
-  {
-    id: uuid(),
-    name: 'Paulo',
-    email: 'paulofelipebrito@hotmail.com',
-    phone: '999667287',
-    category_id: uuid(),
-  },
-  {
-    id: uuid(),
-    name: 'Ana',
-    email: 'anarrcosta@hotmail.com',
-    phone: '99111111',
-    category_id: uuid(),
-  },
-];
+const db = require('../../database');
 
 class ContactsRepository {
-  findAll() {
+  async findAll(orderBy = 'ASC') {
     // eslint-disable-next-line no-promise-executor-return
-    return new Promise((resolve) => resolve(contacts));
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+    const rows = await db.query(`SELECT * FROM contacts ORDER BY name ${direction}`);
+    return rows;
   }
 
-  findById(id) {
+  async findById(id) {
     // eslint-disable-next-line no-promise-executor-return
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.id === id),
-    ));
+    const row = await db.query('SELECT * FROM contacts WHERE id = $1', [id]);
+    return row;
   }
 
-  findByEmail(email) {
+  async findByEmail(email) {
     // eslint-disable-next-line no-promise-executor-return
-    return new Promise((resolve) => resolve(
-      contacts.find((contact) => contact.email === email),
-    ));
+    const row = await db.query('SELECT * FROM contacts WHERE email = $1', [email]);
+    return row;
   }
 
-  delete(id) {
-    return new Promise((resolve) => {
-      console.log('oi');
-      contacts = contacts.filter((contact) => contact.id !== id);
-      resolve();
-    });
+  async delete(id) {
+    const deleteOp = db.query(`
+    DELETE FROM contacts
+    WHERE id = $1`, [id]);
+    return deleteOp;
   }
 
-  create({
+  async create({
     // eslint-disable-next-line camelcase
     name, email, phone, category_id,
   }) {
-    return new Promise((resolve) => {
-      const newContact = {
-        id: uuid(),
-        name,
-        email,
-        phone,
-        // eslint-disable-next-line camelcase
-        category_id,
-      };
-      contacts.push(newContact);
-      resolve(newContact);
-    });
+    const [row] = await db.query(`INSERT INTO contacts(name, email, phone, category_id)
+    VALUES($1,$2,$3,$4)
+    RETURNING *
+    `, [name, email, phone, category_id]);
+
+    return row;
   }
 
-  update(id, {
+  async update(id, {
     // eslint-disable-next-line camelcase
     name, email, phone, category_id,
   }) {
-    return new Promise((resolve) => {
-      const updatedContact = {
-        id,
-        name,
-        email,
-        phone,
-        // eslint-disable-next-line camelcase
-        category_id,
-      };
-      contacts = contacts.map((contact) => (
-        contact.id === id ? updatedContact : contact
-      ));
-
-      resolve(updatedContact);
-    });
+    const [row] = await db.query(`
+      UPDATE contacts
+      SET name = $1, email = $2, phone = $3, category_id = $4
+      WHERE id = $5
+      RETURNING *
+    `, [name, email, phone, category_id, id]);
+    return row;
   }
 }
 
