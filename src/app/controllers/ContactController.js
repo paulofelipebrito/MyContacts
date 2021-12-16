@@ -64,10 +64,8 @@ class ContactController {
       return response.status(400).json({ error: 'Name is required' });
     }
     const [contactByEmail] = await ContactRepository.findByEmail(email);
-    console.log(contactByEmail);
-    console.log(email);
+
     if (contactByEmail && contactByEmail.id !== id) {
-      console.log(email);
       return response.status(400).json({ error: 'This e-mail is alreeady in use' });
     }
 

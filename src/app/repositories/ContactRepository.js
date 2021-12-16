@@ -3,12 +3,22 @@ const db = require('../../database');
 class ContactsRepository {
   async findAll(orderBy = 'ASC') {
     const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
-    const rows = await db.query(`SELECT * FROM contacts ORDER BY name ${direction}`);
+    const rows = await db.query(`
+    SELECT cont.*, cat.name AS cat_Name
+     FROM contacts AS cont
+    LEFT JOIN categories AS cat
+    ON cat.id = cont.category_id
+    ORDER BY cont.name ${direction}`);
     return rows;
   }
 
   async findById(id) {
-    const row = await db.query('SELECT * FROM contacts WHERE id = $1', [id]);
+    const row = await db.query(`
+    SELECT cont.*, cat.name AS cat_Name
+    FROM contacts AS cont
+    LEFT JOIN categories AS cat
+    ON cat.id = cont.category_id
+    WHERE cont.id = $1`, [id]);
     return row;
   }
 
@@ -17,8 +27,8 @@ class ContactsRepository {
     return row;
   }
 
-  delete(id) {
-    const deleteOp = db.query(`
+  async delete(id) {
+    const deleteOp = await db.query(`
     DELETE FROM contacts
     WHERE id = $1`, [id]);
     return deleteOp;
