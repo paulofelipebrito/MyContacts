@@ -7,7 +7,7 @@
   "author": "Paulo Felipe Brito <paulofelipebrito@hotmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "express": "^4.17.1",

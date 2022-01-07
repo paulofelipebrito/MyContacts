@@ -77,7 +77,7 @@ export default function ContactForm({ buttonLabel }) {
           placeholder="Phone"
           value={phone}
           onChange={handlePhoneChange}
-          maxLenght="15"
+          maxLength="15"
         />
       </FormGroup>
 
