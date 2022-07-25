@@ -24,7 +24,7 @@ export default function Modal({ danger }) {
 
       </Container>
     </Overlay>,
-    document.getElementById('modal-rrot'),
+    document.getElementById('modal-root'),
   );
 }
 

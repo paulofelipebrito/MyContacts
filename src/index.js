@@ -11,8 +11,8 @@ app.use(express.json()); // adding middleware
 app.use(cors)
 app.use(routes);
 
-// ERROR HANDLER (MIDDLEWARE) (AFETER ROUTES)
-// You need to add express aync error of express
+// ERROR HANDLER (MIDDLEWARE) (AFTER ROUTES)
+// You need to add express async error of express
 // eslint-disable-next-line no-unused-vars
 app.use(errorHandler);
 
