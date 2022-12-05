@@ -1,6 +1,7 @@
 class ContactMapper {
   toPersistence(domainContact) {
     return {
+      id: domainContact.id,
       name: domainContact.name,
       email: domainContact.email,
       phone: domainContact.phone,
@@ -22,4 +23,4 @@ class ContactMapper {
   }
 }
 
-export default ContactMapper;
+export default new ContactMapper();
