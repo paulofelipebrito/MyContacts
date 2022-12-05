@@ -1,5 +1,5 @@
 class ContactMapper {
-  toPersistemce(domainContact) {
+  toPersistence(domainContact) {
     return {
       name: domainContact.name,
       email: domainContact.email,
