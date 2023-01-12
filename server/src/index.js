@@ -8,7 +8,7 @@ const errorHandler = require('./app/middlewares/errorHandler');
 const app = express();
 
 app.use(express.json()); // adding middleware
-app.use(cors)
+app.use(cors);
 app.use(routes);
 
 // ERROR HANDLER (MIDDLEWARE) (AFTER ROUTES)

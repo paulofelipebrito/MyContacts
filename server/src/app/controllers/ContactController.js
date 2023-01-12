@@ -15,8 +15,8 @@ class ContactController {
     // Get ONE data
     const { id } = request.params;
 
-    if(!isValidUUID(id)){
-      return response.status(400).json({ error: 'Invalid contact id'});
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
 
     const contact = await ContactsRepository.findById(id);
@@ -39,11 +39,11 @@ class ContactController {
       return response.status(400).json({ error: 'Name is required' });
     }
 
-    if(category_id && !isValidUUID(category_id)){
-      return response.status(400).json({ error: 'Invalid category'});
+    if (category_id && !isValidUUID(category_id)) {
+      return response.status(400).json({ error: 'Invalid category' });
     }
 
-    if(email){
+    if (email) {
       const [contactExists] = await ContactRepository.findByEmail(email);
 
       if (contactExists) {
@@ -69,12 +69,12 @@ class ContactController {
       name, email, phone, category_id,
     } = request.body;
 
-    if(!isValidUUID(id)){
-      return response.status(400).json({ error: 'Invalid contact id'});
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
 
-    if(category_id && !isValidUUID(category_id)){
-      return response.status(400).json({ error: 'Invalid category'});
+    if (category_id && !isValidUUID(category_id)) {
+      return response.status(400).json({ error: 'Invalid category' });
     }
 
     if (!name) {
@@ -87,7 +87,7 @@ class ContactController {
       return response.status(404).json({ error: 'Contact not found' });
     }
 
-    if(email){
+    if (email) {
       const [contactByEmail] = await ContactRepository.findByEmail(email);
 
       if (contactByEmail && contactByEmail.id !== id) {
@@ -109,8 +109,8 @@ class ContactController {
     // Delete data
     const { id } = request.params;
 
-    if(!isValidUUID(id)){
-      return response.status(400).json({ error: 'Invalid contact id'});
+    if (!isValidUUID(id)) {
+      return response.status(400).json({ error: 'Invalid contact id' });
     }
 
     await ContactsRepository.delete(id);
