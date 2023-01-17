@@ -1,5 +1,5 @@
 import {
-  useState, useEffect, useMemo, useCallback,
+  useState, useEffect, useMemo, useCallback, useDeferredValue,
 } from 'react';
 
 import ContactsService from '../../services/ContactsService';
@@ -15,27 +15,37 @@ export default function useHome() {
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
-  const filteredContacts = useMemo(() => contacts.filter((contact) => (
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )), [contacts, searchTerm]);
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
-  const loadContacts = useCallback(async () => {
+  const filteredContacts = useMemo(() => contacts.filter((contact) => (
+    contact.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
+  )), [contacts, deferredSearchTerm]);
+
+  const loadContacts = useCallback(async (signal) => {
     try {
       setIsLoading(true);
 
-      const contactsList = await ContactsService.listContacts(orderBy);
+      const contactsList = await ContactsService.listContacts(orderBy, signal);
       setHasError(false);
       setContacts(contactsList);
     } catch (error) {
-      setHasError(true);
-      setContacts([]);
+      if (!(error instanceof DOMException && error.name === 'AbortError')) {
+        setHasError(true);
+        setContacts([]);
+      }
     } finally {
       setIsLoading(false);
     }
   }, [orderBy]);
 
   useEffect(() => {
-    loadContacts();
+    const controller = new AbortController();
+
+    loadContacts(controller.signal);
+
+    return () => {
+      controller.abort();
+    };
   }, [loadContacts]);
 
   function handleToggleOrderBy() {
