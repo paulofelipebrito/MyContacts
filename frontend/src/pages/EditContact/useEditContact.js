@@ -1,4 +1,4 @@
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useEffect, useRef, useState } from 'react';
 import ContactsService from '../../services/ContactsService';
@@ -11,32 +11,40 @@ export default function useEditContact() {
   const contactFormRef = useRef(null);
 
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const safeAsyncAction = useSafeAsyncAction();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadContact() {
       try {
-        const contact = await ContactsService.getContactById(id);
+        const contact = await ContactsService.getContactById(id, controller.signal);
 
         safeAsyncAction(() => {
           contactFormRef.current.setFieldsValues(contact);
           setIsLoading(false);
           setContactName(contact.name);
         });
-      } catch {
-        safeAsyncAction(() => {
-          history.push('./');
-          toast({
-            type: 'danger',
-            text: 'Contact não encontrado!',
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === 'AbortError')) {
+          safeAsyncAction(() => {
+            navigate('/', { replace: true });
+            toast({
+              type: 'danger',
+              text: 'Contact não encontrado!',
+            });
           });
-        });
+        }
       }
     }
 
     loadContact();
-  }, [id, history, safeAsyncAction]);
+
+    return () => {
+      controller.abort();
+    };
+  }, [id, navigate, safeAsyncAction]);
 
   async function handleSubmit(contact) {
     try {
