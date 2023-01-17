@@ -9,11 +9,9 @@ import checkCircleIcons from '../../../assets/images/icons/check-circle.svg';
 function ToastMessage({
   message, onRemoveMessage, isLeaving, animatedRef,
 }) {
-  const { id, text, type } = message;
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      onRemoveMessage(id);
+      onRemoveMessage(message.id);
     }, message.duration || 7000);
 
     return () => {
@@ -22,21 +20,21 @@ function ToastMessage({
   }, [message, onRemoveMessage]);
 
   const handleRemoveToast = () => {
-    onRemoveMessage(id);
+    onRemoveMessage(message.id);
   };
 
   return (
     <Container
-      type={type}
+      type={message.type}
       onClick={handleRemoveToast}
       tabIndex={0}
       role="button"
       isLeaving={isLeaving}
       ref={animatedRef}
     >
-      {type === 'danger' && <img src={xCircleIcons} alt="X" />}
-      {type === 'success' && <img src={checkCircleIcons} alt="Check" />}
-      <strong>{text}</strong>
+      {message.type === 'danger' && <img src={xCircleIcons} alt="X" />}
+      {message.type === 'success' && <img src={checkCircleIcons} alt="Check" />}
+      <strong>{message.text}</strong>
     </Container>
   );
 }
