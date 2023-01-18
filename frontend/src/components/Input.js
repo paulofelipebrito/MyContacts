@@ -2,20 +2,26 @@ import styled, { css } from 'styled-components';
 
 export default styled.input`
   width: 100%;
-  border: none;
-  background: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
   height: 52px;
+
+  padding: 0 16px;
+
+  border: 2px solid #FFF;
   border-radius: 4px;
   outline: none;
-  padding: 8 16px;
+
+  background: ${({ theme }) => theme.colors.inputBackground};
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
+
   font-size: 16px;
-  transition: border-color 0.2s ease-in;
+
+  transition: all .2s ease-in;
+
   appearance: none;
 
-  &:focus{
-    border-color: 2px solid ${({ theme }) => theme.colors.primary.main}
+  &:focus {
+    border: 2px solid ${({ theme }) => theme.colors.primary.main};
+    transition: all .2s ease-in;
   }
 
   ${({ theme, error }) => error && css`
