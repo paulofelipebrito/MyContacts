@@ -22,11 +22,11 @@ export default function Header({
       justifyContent={alignment}
     >
       {(!hasError && qtyOfContacts > 0) && (
-      <strong>
-        {qtyOfFilteredContacts}
-        {qtyOfFilteredContacts === 1 ? ' contacts' : ' contact'}
+        <strong>
+          {qtyOfFilteredContacts}
+          {qtyOfFilteredContacts === 1 ? ' contacts' : ' contact'}
 
-      </strong>
+        </strong>
       )}
       <Link to="/new">New Contact</Link>
     </Container>
