@@ -1,5 +1,4 @@
 import APIError from '../../errors/ApiError';
-import delay from '../../utils/delay';
 
 class HttpClient {
   constructor(baseURL) {
@@ -38,8 +37,6 @@ class HttpClient {
   }
 
   async makeRequest(path, options) {
-    await delay(500);
-
     const headers = new Headers();
 
     if (options.body) {
@@ -60,7 +57,7 @@ class HttpClient {
       method: options.method,
       body: JSON.stringify(options.body),
       headers,
-      signal: options?.signal,
+      signal: options.signal,
     });
 
     let responseBody = null;

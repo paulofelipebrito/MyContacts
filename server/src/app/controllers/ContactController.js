@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable camelcase */
 const ContactRepository = require('../repositories/ContactRepository');
 const ContactsRepository = require('../repositories/ContactRepository');
 const isValidUUID = require('../utils/isValidUUID');
@@ -44,7 +46,7 @@ class ContactController {
     }
 
     if (email) {
-      const [contactExists] = await ContactRepository.findByEmail(email);
+      const contactExists = await ContactRepository.findByEmail(email);
 
       if (contactExists) {
         return response.status(400).json({ error: 'This e-mail is alreeady in use' });
@@ -65,7 +67,6 @@ class ContactController {
     // Edit data
     const { id } = request.params;
     const {
-      // eslint-disable-next-line camelcase
       name, email, phone, category_id,
     } = request.body;
 
@@ -88,7 +89,7 @@ class ContactController {
     }
 
     if (email) {
-      const [contactByEmail] = await ContactRepository.findByEmail(email);
+      const contactByEmail = await ContactRepository.findByEmail(email);
 
       if (contactByEmail && contactByEmail.id !== id) {
         return response.status(400).json({ error: 'This e-mail is alreeady in use' });

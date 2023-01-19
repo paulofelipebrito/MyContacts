@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const CategoryRepository = require('../repositories/CategoryRepository');
 
 class CategoryController {
@@ -24,7 +25,7 @@ class CategoryController {
     const { name } = request.body;
 
     const categoryExists = await CategoryRepository.findById(id);
-    console.log(id);
+
     if (!categoryExists) {
       return response.status(404).json({ error: 'Category not found' });
     }
