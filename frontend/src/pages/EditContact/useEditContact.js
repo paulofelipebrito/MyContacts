@@ -23,8 +23,8 @@ export default function useEditContact() {
 
         safeAsyncAction(() => {
           contactFormRef.current.setFieldsValues(contact);
-          setIsLoading(false);
           setContactName(contact.name);
+          setIsLoading(false);
         });
       } catch (error) {
         if (!(error instanceof DOMException && error.name === 'AbortError')) {

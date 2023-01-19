@@ -1,5 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/jsx-one-expression-per-line */
 import {
   Container,
 } from './styles';
@@ -34,8 +32,8 @@ export default function Home() {
   } = useHome();
 
   const hasContacts = contacts.length > 0;
-  const isListEmpty = !hasError && !isLoading && !hasContacts;
-  const isSearchEmpty = !hasError && hasContacts && filteredContacts.length < 1;
+  const isListEmpty = !hasError && (!isLoading && !hasContacts);
+  const isSearchEmpty = !hasError && (hasContacts && filteredContacts.length < 1);
 
   return (
     <Container>
@@ -50,8 +48,8 @@ export default function Home() {
 
       <Header
         hasError={hasError}
-        contacts={contacts.length}
-        filteredContacts={filteredContacts.length}
+        qtyOfContacts={contacts.length}
+        qtyOfFilteredContacts={filteredContacts.length}
       />
 
       {hasError && <ErrorStatus onTryAgain={handleTryAgain} />}

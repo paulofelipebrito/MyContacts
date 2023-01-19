@@ -26,14 +26,16 @@ export default function useHome() {
       setIsLoading(true);
 
       const contactsList = await ContactsService.listContacts(orderBy, signal);
+
       setHasError(false);
       setContacts(contactsList);
+      setIsLoading(false);
     } catch (error) {
-      if (!(error instanceof DOMException && error.name === 'AbortError')) {
-        setHasError(true);
-        setContacts([]);
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return;
       }
-    } finally {
+      setHasError(true);
+      setContacts([]);
       setIsLoading(false);
     }
   }, [orderBy]);
@@ -62,10 +64,10 @@ export default function useHome() {
     loadContacts();
   }
 
-  function handleDeleteContact(contact) {
+  const handleDeleteContact = useCallback((contact) => {
     setContactBeingDeleted(contact);
     setIsDeleteModalVisible(true);
-  }
+  }, []);
 
   function handleCloseDeleteModal() {
     setIsDeleteModalVisible(false);
@@ -76,9 +78,9 @@ export default function useHome() {
       setIsLoadingDelete(true);
       await ContactsService.deleteContact(contactBeingDeleted.id);
 
-      setContacts((prevState) => {
-        prevState.filter((contact) => contact.id !== contactBeingDeleted.id);
-      });
+      setContacts((prevState) => prevState.filter(
+        (contact) => contact.id !== contactBeingDeleted.id,
+      ));
 
       handleCloseDeleteModal();
 
