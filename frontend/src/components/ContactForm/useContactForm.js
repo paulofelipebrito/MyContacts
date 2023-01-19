@@ -61,7 +61,7 @@ export default function useContactForm(onSubmit, ref) {
     setName(event.target.value);
 
     if (!event.target.value) {
-      setError({ field: 'name', message: 'Nome é obrigatório' });
+      setError({ field: 'name', message: 'Name is required' });
     } else {
       removeErrors('name');
     }

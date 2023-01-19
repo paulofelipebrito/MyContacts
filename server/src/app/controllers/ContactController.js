@@ -49,7 +49,7 @@ class ContactController {
       const contactExists = await ContactRepository.findByEmail(email);
 
       if (contactExists) {
-        return response.status(400).json({ error: 'This e-mail is alreeady in use' });
+        return response.status(400).json({ error: 'This e-mail is already in use' });
       }
     }
 
@@ -92,7 +92,7 @@ class ContactController {
       const contactByEmail = await ContactRepository.findByEmail(email);
 
       if (contactByEmail && contactByEmail.id !== id) {
-        return response.status(400).json({ error: 'This e-mail is alreeady in use' });
+        return response.status(400).json({ error: 'This e-mail is already in use' });
       }
     }
 
