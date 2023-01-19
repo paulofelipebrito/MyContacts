@@ -8,7 +8,7 @@ import useErrors from '../../hooks/useErrors';
 import CategoriesService from '../../services/CategoriesService';
 import useSafeAsyncState from '../../hooks/useSafeAsyncState';
 
-export default function useContactForm({ onSubmit, ref }) {
+export default function useContactForm(onSubmit, ref) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');

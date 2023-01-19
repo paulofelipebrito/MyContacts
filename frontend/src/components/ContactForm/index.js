@@ -66,7 +66,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
         >
           <option value="">Sem Categoria</option>
           {categories.map((category) => (
-            <option key={category.name} value={category.name}>{category.name}</option>
+            <option key={category.id} value={category.id}>{category.name}</option>
           ))}
         </Select>
       </FormGroup>
