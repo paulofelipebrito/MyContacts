@@ -14,12 +14,12 @@ export default function useNewContact() {
 
       toast({
         type: 'success',
-        text: 'Contato cadastrado com sucesso!',
+        text: 'Contact successfully registered!',
       });
     } catch {
       toast({
         type: 'danger',
-        text: 'Ocorreu um erro ao cadastrar o contato!',
+        text: 'An error occurred while registering the contact!',
       });
     }
   }

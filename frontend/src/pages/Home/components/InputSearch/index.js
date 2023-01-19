@@ -11,7 +11,7 @@ export default function InputSearch({
       <input
         value={value}
         type="text"
-        placeholder="Pesquisar Contato"
+        placeholder="Search Contact"
         onChange={onChange}
       />
     </Container>

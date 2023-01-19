@@ -64,7 +64,7 @@ const ContactForm = forwardRef(({ buttonLabel, onSubmit }, ref) => {
           onChange={(event) => setCategoryId(event.target.value)}
           disabled={isLoadingCategories || isSubmitting}
         >
-          <option value="">Sem Categoria</option>
+          <option value="">Without category</option>
           {categories.map((category) => (
             <option key={category.id} value={category.id}>{category.name}</option>
           ))}

@@ -53,12 +53,12 @@ export default function useEditContact() {
       setContactName(updatedContactData.name);
       toast({
         type: 'success',
-        text: 'Contato editado com sucesso!',
+        text: 'Contact edited successfully!',
       });
     } catch {
       toast({
         type: 'danger',
-        text: 'Ocorreu um erro ao editar o contato!',
+        text: 'An error occurred while editing the contact!',
       });
     }
   }

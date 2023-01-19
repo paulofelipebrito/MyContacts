@@ -86,12 +86,12 @@ export default function useHome() {
 
       toast({
         type: 'success',
-        text: 'Contato deletado com sucesso!',
+        text: 'Successfully deleted contact!',
       });
     } catch {
       toast({
         type: 'danger',
-        text: 'Ocorreu um erro ao deletar o contato!',
+        text: 'There was an error deleting the contact!',
       });
     } finally {
       setIsLoadingDelete(false);

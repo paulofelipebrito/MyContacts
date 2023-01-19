@@ -14,11 +14,11 @@ export default function EditContact() {
   return (
     <>
       <Loader isLoading={isLoading} />
-      <PageHeader title={isLoading ? 'Carregando...' : `Editar ${contactName}`} />
+      <PageHeader title={isLoading ? 'Loading...' : `Edit ${contactName}`} />
 
       <ContactForm
         ref={contactFormRef}
-        buttonLabel="Salvar alterações"
+        buttonLabel="Save changes"
         onSubmit={handleSubmit}
       />
     </>

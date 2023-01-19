@@ -68,13 +68,13 @@ export default function Home() {
           <Modal
             danger
             isLoading={isLoadingDelete}
-            confirmLable="Deletar"
-            title={`Tem certeza que deseja remover o contato "${contactBeingDeleted?.name}"?`}
+            confirmLable="Delete"
+            title={`Are you sure you want to remove the contact "${contactBeingDeleted?.name}"?`}
             visible={isDeleteModalVisible}
             onCancel={handleCloseDeleteModal}
             onConfirm={handleConfirmDeleteContact}
           >
-            <p>Essa ação não poderá ser desfeita!</p>
+            <p>This action cannot be undone!</p>
           </Modal>
         </>
       )}
