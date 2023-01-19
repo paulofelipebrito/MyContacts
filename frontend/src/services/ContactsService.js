@@ -31,7 +31,7 @@ class ContactsService {
   }
 
   deleteContact(id) {
-    return this.httpClient.put(`/contacts/${id}`);
+    return this.httpClient.delete(`/contacts/${id}`);
   }
 }
 
